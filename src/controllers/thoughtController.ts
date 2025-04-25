@@ -32,15 +32,16 @@ export const createThought = async (req: Request, res: Response) => {
       return res.status(404).json({
         message: 'Thought was NOT created. Enter a valid user id and username.',
       })
+    } else {
+      const thought = await Thought.create(req.body);
+      await User.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $push: { thoughts: thought._id } },
+        { new: true }
+      );
+      res.json(thought);
+      return;
     }
-    const thought = await Thought.create(req.body);
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: req.body.userId },
-      { $push: { thoughts: thought._id } },
-      { new: true }
-    );
-    res.json(updatedUser);
-    return;
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -71,11 +72,16 @@ export const updateThought = async (req: Request, res: Response) => {
 
 export const deleteThought = async (req: Request, res: Response) => {
   try {
-    const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
+    const thought = await Thought.findOne({ _id: req.params.thoughtId });
     if (!thought) {
       return res.status(404).json({ message: 'No thought with this id!' });
     }
 
+    await Thought.deleteOne({ _id: req.params.thoughtId });
+    await User.findOneAndUpdate(
+      { username: thought?.username},
+      { $pull: { thoughts: thought._id } }
+    )
     res.json({ message: 'Thought successfully deleted!' });
     return;
   } catch (err) {

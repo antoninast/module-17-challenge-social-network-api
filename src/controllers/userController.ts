@@ -75,12 +75,17 @@ import { Request, Response } from 'express';
 
   export const addFriend = async (req: Request, res: Response) => {
     try {
-      const user = await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { _id: req.params.userId },
         { $push: { friends: req.params.friendId }},
         { runValidators: true, new: true }
       );
-      res.json(user);
+      await User.findOneAndUpdate(
+        { _id: req.params.friendId },
+        { $push: { friends: req.params.userId }},
+        { runValidators: true, new: true }
+      );
+      res.json({ message: "New friend was added successfully!" });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -88,12 +93,17 @@ import { Request, Response } from 'express';
 
   export const deleteFriend = async (req: Request, res: Response) => {
     try {
-      const user = await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { _id: req.params.userId },
         { $pull: { friends: `${req.params.friendId}` } },
         { runValidators: true, new: true }
       );
-      res.json(user);
+      await User.findOneAndUpdate(
+        { _id: req.params.friendId },
+        { $pull: { friends: `${req.params.userId}` } },
+        { runValidators: true, new: true }
+      );
+      res.json({ message: "The user was removed from your friends list" });
     } catch (err) {
       res.status(500).json(err);
     }

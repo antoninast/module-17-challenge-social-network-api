@@ -1,6 +1,6 @@
 import connection from '../config/connection.js';
 import { User, Thought } from '../models/index.js';
-import { usersData, thoughtsData } from './data.js';
+import { usersData } from './data.js';
 // import { getRandomName, getRandomApplications } from './data.js';
 
 connection.on('error', (err) => err);
@@ -20,30 +20,12 @@ connection.once('open', async () => {
 
   const users: { username: string, email: string, thoughts: string[], friends: string[] } [] = [];
   const thoughts: { thoughtText: string, username: string, reactions: any[] }[] = [];
-  // const applications = getRandomApplications(10);
-
-  // for (let i = 0; i < 20; i++) {
-  //   users.push({
-  //     // first,
-  //     // last,
-  //     age: Math.floor(Math.random() * (99 - 18 + 1) + 18),
-  //   });
-  // }
-
   usersData.forEach((user) => {
     users.push({
       email: user.email,
       username: user.username,
       thoughts: [],
       friends: [],
-    });
-  });
-
-  thoughtsData.forEach((thought) => {
-    thoughts.push({
-      thoughtText: thought.thoughtText,
-      username: thought.username,
-      reactions: thought.reactions || [],
     });
   });
 
