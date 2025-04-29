@@ -39,7 +39,7 @@ The application is built with the help of TypeScript, Express.js, MongoDB and mo
 
 **POST** `/api/users/:userId/friends/:friendId` - add user as a friend
 
-**DELETE** `/api/users/:userId/friends/:friendId` - delete yser from friends list
+**DELETE** `/api/users/:userId/friends/:friendId` - delete user from friends list
 
 
 ### Thoughts Routes
