@@ -9,7 +9,17 @@ Clone the repo and run:
 3. `npm run start`
 
 ## Usage
-Social Network Api can be used as a backend of a an application. You can create users, edit users, delete users, and see all users. each user can create, edit and delete thoughts. Each user can react on each thougth multiple times. Users can also delete their reactions. Users can add each other as friends, and also delete each other from the friend's list.
+**The Social Network API** serves as the backend for a social networking application. It provides a set of RESTful endpoints that allow for the following operations:
+
+**User Management:** Create, update, view, and delete users.
+
+**Thoughts:** Users can create, edit, and delete their own thoughts.
+
+**Reactions:** Users can react to any thought multiple times and remove their reactions as needed.
+
+**Friendship:** Users can add other users as friends or remove them from their friends list.
+
+This API is designed to support flexible and dynamic interactions between users in a social network environment.
 
 ## Tools and technologies
 The application is built with the help of TypeScript, Express.js, MongoDB and mongoose.
